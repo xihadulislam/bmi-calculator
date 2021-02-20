@@ -1,3 +1,4 @@
+import 'package:bmi/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'Const/Const.dart';
@@ -22,68 +23,5 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("BMI Calculator".toUpperCase()),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                        child:ContentCard(color: activeContainerCardColor,)),
-                    Expanded(
-                        child: ContentCard(color: activeContainerCardColor,)),
-                  ],
-                )),
-            Expanded(
-                child: ContentCard(color: activeContainerCardColor,)),
-            Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: ContentCard(color: activeContainerCardColor,)
 
-                    ),
-                    Expanded(
-                        child: ContentCard(color: activeContainerCardColor  ,)),
-                  ],
-                )),
-
-            Container(
-              color: bottomContainerColor,
-              margin: EdgeInsets.only(top: 10.0),
-              height: bottomContainerSize,
-              width: double.infinity,
-            )
-
-          ],
-        ));
-  }
-}
-
-class ContentCard extends StatelessWidget {
-
-  final Color color;
-
-  ContentCard({@required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10.0)),
-    );
-  }
-}
