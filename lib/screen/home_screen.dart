@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../Const/Const.dart';
-import '../Const/Const.dart';
-import '../Const/Const.dart';
 
 enum Gender { MALE, FEMALE }
 
@@ -17,6 +15,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Gender selectedGender;
+  int height = 180;
 
   @override
   Widget build(BuildContext context) {
@@ -25,60 +24,94 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text("BMI Calculator".toUpperCase()),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
                 child: Row(
               children: [
                 Expanded(
-                    child: GestureDetector(
-                  onTap: () {
+                    child: ContentCard(
+                  onPress: () {
                     setState(() {
                       selectedGender = Gender.MALE;
                     });
                   },
-                  child: ContentCard(
-                    color: selectedGender == Gender.MALE
-                        ? activeContainerCardColor
-                        : inactiveContainerCardColor,
-                    cardChild: IconContainer(
-                      iconData: FontAwesomeIcons.mars,
-                      title: "male".toUpperCase(),
-                    ),
+                  color: selectedGender == Gender.MALE
+                      ? kActiveContainerCardColor
+                      : kInactiveContainerCardColor,
+                  cardChild: IconContainer(
+                    iconData: FontAwesomeIcons.mars,
+                    title: "male".toUpperCase(),
                   ),
                 )),
                 Expanded(
-                    child: GestureDetector(
-                  onTap: () {
+                    child: ContentCard(
+                  onPress: () {
                     setState(() {
                       selectedGender = Gender.FEMALE;
                     });
                   },
-                  child: ContentCard(
-                    color: selectedGender == Gender.FEMALE
-                        ? activeContainerCardColor
-                        : inactiveContainerCardColor,
-                    cardChild: IconContainer(
-                      iconData: FontAwesomeIcons.venus,
-                      title: "female ".toUpperCase(),
-                    ),
+                  color: selectedGender == Gender.FEMALE
+                      ? kActiveContainerCardColor
+                      : kInactiveContainerCardColor,
+                  cardChild: IconContainer(
+                    iconData: FontAwesomeIcons.venus,
+                    title: "female ".toUpperCase(),
                   ),
                 )),
               ],
             )),
             Expanded(
                 child: ContentCard(
-              color: activeContainerCardColor,
+              color: kActiveContainerCardColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Height".toUpperCase(), style: kLabelTextStyle),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(height.toString(), style: kNumberTextStyle),
+                      Text("cm", style: kLabelTextStyle),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+
+                      inactiveTrackColor: Color(0xFF8D8E98),
+                      activeTrackColor: Colors.white,
+                      thumbColor: Color(0xFFEB1555),
+                      overlayColor: Color(0x01EB1555),
+                      thumbShape:
+                          RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                      overlayShape:
+                          RoundSliderThumbShape(enabledThumbRadius: 30.0),
+                    ),
+                    child: Slider(
+                        min: 120,
+                        max: 220,
+                        value: height.toDouble(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            height = newValue.toInt();
+                          });
+                        }),
+                  )
+                ],
+              ),
             )),
             Expanded(
                 child: Row(
               children: [
                 Expanded(
                     child: ContentCard(
-                  color: activeContainerCardColor,
+                  color: kActiveContainerCardColor,
                 )),
                 Expanded(
                     child: ContentCard(
-                  color: activeContainerCardColor,
+                  color: kActiveContainerCardColor,
                 )),
               ],
             )),
@@ -89,10 +122,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
               ),
               decoration: BoxDecoration(
-                  color: bottomContainerColor,
+                  color: kBottomContainerColor,
                   borderRadius: BorderRadius.circular(10.0)),
               margin: EdgeInsets.all(10.0),
-              height: bottomContainerSize,
+              height: kBottomContainerSize,
               width: double.infinity,
             )
           ],

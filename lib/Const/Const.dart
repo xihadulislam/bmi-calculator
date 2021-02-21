@@ -1,7 +1,10 @@
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-const bottomContainerSize = 80.0;
-const bottomContainerColor = Color(0xFFEB1555);
-const activeContainerCardColor = Color(0xFF1D1E33);
-const inactiveContainerCardColor = Color(0xFF111328);
+const kBottomContainerSize = 80.0;
+const kBottomContainerColor = Color(0xFFEB1555);
+const kActiveContainerCardColor = Color(0xFF1D1E33);
+const kInactiveContainerCardColor = Color(0xFF111328);
+const kLabelTextStyle  = TextStyle(fontSize: 18.0,color:  Color(0xFF8D8E98));
+const kNumberTextStyle  = TextStyle(fontSize: 50.0, fontWeight: FontWeight.w900);
+
