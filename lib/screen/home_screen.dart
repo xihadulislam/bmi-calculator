@@ -1,3 +1,4 @@
+import 'package:bmi/Calculate.dart';
 import 'package:bmi/screen/result_screen.dart';
 import 'package:bmi/widgets/content_card.dart';
 import 'package:bmi/widgets/icon_content.dart';
@@ -15,7 +16,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Gender selectedGender;
+  Gender selectedGender = Gender.MALE;
   int height = 180;
   int weight = 60;
   int age = 20;
@@ -110,74 +111,87 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                     child: ContentCard(
                   color: kActiveContainerCardColor,
-                      cardChild: Column(
+                  cardChild: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("weight".toUpperCase(), style: kLabelTextStyle),
+                      Text(weight.toString(), style: kNumberTextStyle),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("weight".toUpperCase(), style: kLabelTextStyle),
-                          Text(weight.toString(), style: kNumberTextStyle),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              RoundIcon(iconData: FontAwesomeIcons.minus,onPress: (){
-                                setState(() {
-                                  weight--;
-                                });
-                              },),
-
-
-                              SizedBox(
-                                width: 10,
-                              ),
-                              RoundIcon(iconData: FontAwesomeIcons.plus,onPress: (){
-                                setState(() {
-                                  weight++;
-                                });
-                              },),
-                            ],
-                          )
-
+                          RoundIconButton(
+                            iconData: FontAwesomeIcons.minus,
+                            onPress: () {
+                              setState(() {
+                                weight--;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundIconButton(
+                            iconData: FontAwesomeIcons.plus,
+                            onPress: () {
+                              setState(() {
+                                weight++;
+                              });
+                            },
+                          ),
                         ],
-                      ),
+                      )
+                    ],
+                  ),
                 )),
                 Expanded(
                     child: ContentCard(
                   color: kActiveContainerCardColor,
-                      cardChild: Column(
+                  cardChild: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("age".toUpperCase(), style: kLabelTextStyle),
+                      Text(age.toString(), style: kNumberTextStyle),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("age".toUpperCase(), style: kLabelTextStyle),
-                          Text(age.toString(), style: kNumberTextStyle),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              RoundIcon(iconData: FontAwesomeIcons.minus,onPress: (){
-                                setState(() {
-                                  age--;
-                                });
-                              },),
-
-                              SizedBox(
-                                width: 10,
-                              ),
-                              RoundIcon(iconData: FontAwesomeIcons.plus,onPress: (){
-                                setState(() {
-                                  age++;
-                                });
-                              },),
-
-                            ],
-                          )
-
+                          RoundIconButton(
+                            iconData: FontAwesomeIcons.minus,
+                            onPress: () {
+                              setState(() {
+                                age--;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          RoundIconButton(
+                            iconData: FontAwesomeIcons.plus,
+                            onPress: () {
+                              setState(() {
+                                age++;
+                              });
+                            },
+                          ),
                         ],
-                      ),
+                      )
+                    ],
+                  ),
                 )),
               ],
             )),
             GestureDetector(
-              onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>ResultScreen() )),
+              onTap: () {
+
+                var bmi = BMI(height: height, weight: weight);
+                bmi.calculateBMI();
+
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResultScreen(result: bmi.getResult(),calculateBMI: bmi.calculateBMI(),InterPretation: bmi.getInterPretation(),)));
+              } ,
               child: Container(
                 alignment: Alignment.center,
-                child:  Text(
+                child: Text(
                   "Calculate".toUpperCase(),
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
@@ -194,21 +208,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class RoundIcon extends StatelessWidget {
+class RoundIconButton extends StatelessWidget {
   Function onPress;
   IconData iconData;
 
-  RoundIcon({this.iconData, this.onPress});
+  RoundIconButton({this.iconData, this.onPress});
 
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: onPress,
-      child:  Icon(iconData),
-      constraints:   BoxConstraints.tightFor(
-        width: 48.0,
-        height: 48.0
-      ),
+      child: Icon(iconData),
+      constraints: BoxConstraints.tightFor(width: 48.0, height: 48.0),
       elevation: 6.0,
       shape: CircleBorder(),
       fillColor: Color(0xFF4C4F5E),
